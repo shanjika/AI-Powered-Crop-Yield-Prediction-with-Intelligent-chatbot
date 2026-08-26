@@ -1,0 +1,54 @@
+{
+  "best_model_name": "Gradient Boosting Regressor",
+  "metrics": {
+    "mae": 1106.84,
+    "mse": 2850191.29,
+    "rmse": 1688.25,
+    "r2_score": 0.9721,
+    "training_time_seconds": 21.33
+  },
+  "all_models_evaluated": {
+    "Random Forest Regressor": {
+      "mae": 1207.57,
+      "mse": 3725994.71,
+      "rmse": 1930.28,
+      "r2_score": 0.9635,
+      "training_time_seconds": 4.34
+    },
+    "Gradient Boosting Regressor": {
+      "mae": 1106.84,
+      "mse": 2850191.29,
+      "rmse": 1688.25,
+      "r2_score": 0.9721,
+      "training_time_seconds": 21.33
+    },
+    "XGBoost Regressor": {
+      "mae": 1142.77,
+      "mse": 2998439.7,
+      "rmse": 1731.6,
+      "r2_score": 0.9706,
+      "training_time_seconds": 1.21
+    }
+  },
+  "categorical_features": [
+    "district",
+    "crop",
+    "pattam",
+    "soil_type",
+    "irrigation_type"
+  ],
+  "numerical_features": [
+    "temperature",
+    "humidity",
+    "rainfall_mm",
+    "soil_ph",
+    "soil_n",
+    "soil_p",
+    "soil_k",
+    "soil_ec",
+    "soil_organic_carbon"
+  ],
+  "target_feature": "yield_per_acre",
+  "training_records": 15000,
+  "trained_at": "2026-08-26 16:22:41 UTC"
+}
