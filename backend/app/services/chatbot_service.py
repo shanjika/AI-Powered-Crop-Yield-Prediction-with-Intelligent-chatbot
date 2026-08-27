@@ -67,6 +67,24 @@ def get_expert_rule_response(query: str, lang: str, context: Optional[Dict[str, 
         total_prod = context.get("total_production_kg", "8400")
         land_acres = context.get("land_area_acres", "3")
         soil_ph = context.get("soil_ph", "6.8")
+        rainfall = context.get("rainfall_mm", "850")
+
+        # Questions about irrigation / water requirement
+        if any(w in q for w in ["irrigation", "water", "drainage", "பாசனம்", "தண்ணீர்", "நீர்"]):
+            if lang == "ta":
+                return (
+                    f"💧 **{crop_ta} பயிருக்கான பாசன மேலாண்மை ({district}):**\n\n"
+                    f"• **பாசனத் தேவை:** ஆம், {crop_ta} பயிருக்கு முறையான பாசனம் மிக அவசியம். குறிப்பாக பூக்கும் மற்றும் காய்/பழம் பிடிக்கும் தருணங்களில் நீர் பற்றாக்குறை இருக்கக்கூடாது.\n"
+                    f"• **சொட்டு நீர் பாசனம் (Drip Irrigation):** 40-50% நீர் சேமிப்பு மற்றும் 20% அதிக மகசூல் பெற சொட்டு நீர் பாசனம் சிறந்தது.\n"
+                    f"• **பாசன இடைவெளி:** செம்மண்/மண் தன்மையைப் பொறுத்து 4-7 நாட்களுக்கு ஒருமுறை மிதமான பாசனம் செய்யவும். அதிக நீர் தேங்காமல் வடிகால் வசதி அமைக்கவும்."
+                )
+            else:
+                return (
+                    f"💧 **Irrigation Management for {crop} in {district}:**\n\n"
+                    f"• **Requirement:** Yes, regular irrigation is essential for {crop} to achieve the expected yield of {predicted_yield} kg/acre.\n"
+                    f"• **Method:** Drip irrigation is highly recommended to save 40-50% water while maintaining optimal root-zone moisture.\n"
+                    f"• **Frequency:** Irrigate every 4–7 days depending on soil type and weather conditions. Avoid waterlogging by ensuring proper field drainage, especially during flowering/fruiting stages."
+                )
 
         # Questions about why yield is low / how to improve
         if any(w in q for w in ["low", "increase", "improve", "boost", "குறைவு", "அதிகரிக்க", "உயர்த்த"]):
@@ -104,6 +122,23 @@ def get_expert_rule_response(query: str, lang: str, context: Optional[Dict[str, 
                     f"• **First Top Dressing (20-25 Days):** 40% Urea after weeding.\n"
                     f"• **Second Top Dressing (45-50 Days - Flowering Stage):** Remaining 35% Urea + Muriate of Potash (MOP) to boost grain quality.\n"
                     f"• **Tip:** Always apply fertilizer when soil has optimum moisture, never during heavy rain forecast."
+                )
+
+        # Questions about pest / disease management
+        if any(w in q for w in ["pest", "disease", "insect", "fungus", "spray", "பூச்சி", "நோய்", "மருந்து"]):
+            if lang == "ta":
+                return (
+                    f"🛡️ **{crop_ta} பயிர் பாதுகாப்பு & பூச்சி மேலாண்மை:**\n\n"
+                    f"• **இயற்கை முறை:** 3% வேப்பெண்ணெய் கரைசல் (1 லிட்டர் தண்ணீருக்கு 30 மி.லி) அல்லது பஞ்சகவ்யா தெளிக்கவும்.\n"
+                    f"• **பூச்சி பொறிகள்:** ஏக்கருக்கு 4-5 மஞ்சள் வண்ண ஒட்டும் பொறிகள் மற்றும் விளக்கு பொறிகள் அமைக்கவும்.\n"
+                    f"• **பூஞ்சாண நோய்:** சூடோமோனாஸ் (Pseudomonas fluorescens) 10 கிராம்/லிட்டர் நீரில் கலந்து தெளிக்கவும்."
+                )
+            else:
+                return (
+                    f"🛡️ **Pest & Disease Management for {crop}:**\n\n"
+                    f"• **Organic Spray:** Spray 3% Neem Seed Kernel Extract (NSKE) or Neem Oil (30ml/10L water) early in the morning.\n"
+                    f"• **Bio-control:** Apply Pseudomonas fluorescens (10g/L) for root rot and fungal wilt control.\n"
+                    f"• **Traps:** Install 4–5 yellow sticky traps and pheromone traps per acre to monitor sucking pests."
                 )
 
         # General post-prediction context response
@@ -163,6 +198,22 @@ def get_expert_rule_response(query: str, lang: str, context: Optional[Dict[str, 
                 "• **Pest Vigilance:** Monitor for stem borer dead hearts and BPH (brown planthopper); maintain alleys (skip rows) every 2 meters for aeration."
             )
 
+    if any(w in q for w in ["irrigation", "water", "பாசனம்", "தண்ணீர்", "நீர்"]):
+        if lang == "ta":
+            return (
+                "💧 **பொது பாசன மேலாண்மை குறிப்புகள்:**\n\n"
+                "• **சொட்டு நீர் பாசனம்:** காய்கறி மற்றும் பழத்தோட்ட பயிர்களுக்கு 40% வரை நீர் சேமிக்கும்.\n"
+                "• **காய்ச்சலும் பாய்ச்சலும் (AWD):** நெல் பயிருக்கு தொடர்ந்து நீர் தேக்காமல் மாற்று முறையில் பாசனம் செய்வது வேர் வளர்ச்சிக்கும் நீர் சேமிப்பிற்கும் நல்லது.\n"
+                "• **பாசன நேரம்:** அதிகாலை அல்லது மாலை வேளையில் பாசனம் செய்வது ஆவியாதல் இழப்பைத் தடுக்கும்."
+            )
+        else:
+            return (
+                "💧 **General Agricultural Irrigation Guide:**\n\n"
+                "• **Drip Irrigation:** Best suited for orchards, row crops, and vegetables; delivers water directly to the root zone.\n"
+                "• **Alternate Wetting & Drying (AWD):** For paddy, allows soil to dry slightly before re-irrigating, saving up to 30% water.\n"
+                "• **Irrigation Timing:** Early morning or late evening irrigation minimizes evaporation loss."
+            )
+
     # Generic farming response
     if lang == "ta":
         return (
@@ -198,7 +249,7 @@ async def generate_chatbot_response(
             "is_refusal": True
         }
 
-    # 2. If external LLM API key (Gemini / OpenAI) is configured, call it with structured agri prompt
+    # 2. Call Google Gemini LLM API (gemini-3.5-flash-lite)
     if settings.LLM_API_KEY and len(settings.LLM_API_KEY) > 10:
         try:
             # Build system prompt with agricultural guardrail and context
@@ -207,30 +258,59 @@ async def generate_chatbot_response(
                 "You provide scientifically accurate, practical farming advice based on TNAU (Tamil Nadu Agricultural University) "
                 "and ICAR standards. Only answer farming, crop, weather, fertilizer, pest, and soil questions. "
                 "If the user asks something completely unrelated to agriculture, politely decline in their language. "
-                f"Reply in the user's language: {'Tamil (தமிழ்)' if lang == 'ta' else 'English'}.\n"
+                f"Reply in the user's language: {'Tamil (தமிழ்)' if lang == 'ta' else 'English'}."
             )
             if context:
-                system_prompt += f"\nCURRENT FARM PREDICTION CONTEXT:\n{context}\n"
+                system_prompt += f"\n\nCURRENT FARM PREDICTION CONTEXT:\n{context}"
 
-            # Gemini API call
-            async with httpx.AsyncClient(timeout=12.0) as client:
-                gemini_url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={settings.LLM_API_KEY}"
+            # Build user message
+            user_text = query
+            if context:
+                user_text = f"Based on my farm data above, {query}"
+
+            # Gemini API call — systemInstruction must be a separate top-level field,
+            # NOT mixed into the user content. Mixing it caused the unexpected EOF error.
+            async with httpx.AsyncClient(timeout=20.0) as client:
+                gemini_url = (
+                    f"https://generativelanguage.googleapis.com/v1beta/models/"
+                    f"gemini-3.5-flash-lite:generateContent?key={settings.LLM_API_KEY}"
+                )
                 payload = {
+                    "systemInstruction": {
+                        "parts": [{"text": system_prompt}]
+                    },
                     "contents": [
-                        {"role": "user", "parts": [{"text": f"{system_prompt}\n\nFarmer Question: {query}"}]}
-                    ]
+                        {"role": "user", "parts": [{"text": user_text}]}
+                    ],
+                    "generationConfig": {
+                        "temperature": 0.4,
+                        "maxOutputTokens": 1024,
+                        "topP": 0.9
+                    }
                 }
                 res = await client.post(gemini_url, json=payload)
                 if res.status_code == 200:
                     data = res.json()
-                    answer = data["candidates"][0]["content"]["parts"][0]["text"]
-                    return {
-                        "response": answer,
-                        "language": lang,
-                        "is_refusal": False
-                    }
+                    candidates = data.get("candidates", [])
+                    if candidates:
+                        parts = candidates[0].get("content", {}).get("parts", [])
+                        if parts:
+                            answer = parts[0].get("text", "").strip()
+                            if answer:
+                                return {
+                                    "response": answer,
+                                    "language": lang,
+                                    "is_refusal": False
+                                }
+                    print(f"[Chatbot] Gemini returned no usable candidates: {data}")
+                else:
+                    print(f"[Chatbot] Gemini API error {res.status_code}: {res.text}")
+        except httpx.ReadTimeout:
+            print("[Chatbot] Gemini API timed out after 20s — falling back to expert engine.")
+        except httpx.RemoteProtocolError as e:
+            print(f"[Chatbot] Gemini stream error (unexpected EOF) — check API key and payload: {e}")
         except Exception as e:
-            print(f"LLM API Call exception, using expert agronomy engine: {e}")
+            print(f"[Chatbot] LLM API unexpected exception — falling back to expert engine: {type(e).__name__}: {e}")
 
     # 3. High-precision Expert Heuristic Agronomy Engine
     response_text = get_expert_rule_response(query, lang, context)

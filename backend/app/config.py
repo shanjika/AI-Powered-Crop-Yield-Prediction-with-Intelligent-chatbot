@@ -19,9 +19,11 @@ class Settings(BaseSettings):
     
     UPLOAD_DIR: str = os.path.join(os.path.dirname(os.path.dirname(__file__)), "uploads")
     
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+    model_config = {
+        "case_sensitive": True,
+        "env_file": ".env",
+        "extra": "ignore"
+    }
 
 settings = Settings()
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
