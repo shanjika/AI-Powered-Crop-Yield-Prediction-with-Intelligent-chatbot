@@ -1,0 +1,4 @@
+,mae,mse,rmse,r2_score,r2_percentage,training_time_seconds
+Random Forest Regressor,1207.57,3725994.71,1930.28,0.9635,96.35,2.61
+Gradient Boosting Regressor,1106.84,2850191.29,1688.25,0.9721,97.21,11.13
+XGBoost Regressor,1142.77,2998439.7,1731.6,0.9706,97.06,0.78
